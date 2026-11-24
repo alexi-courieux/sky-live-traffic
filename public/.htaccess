@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# adsb.fi proxy
+RewriteRule ^api/adsb(/v2/.*)$ api/adsb.php?p=$1 [QSA,L]
+
+# force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

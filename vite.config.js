@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // adsb.fi sends no CORS headers, so the browser talks to it through this proxy
-// (dev server and `vite preview`). Production needs its own proxy, see README.
+// (dev server and `vite preview`). Production uses public/api/adsb.php (see README).
 const adsbProxy = {
   '/api/adsb': {
     target: 'https://opendata.adsb.fi',
@@ -13,7 +13,7 @@ const adsbProxy = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/pixijs-react/',
+  base: '/',
   plugins: [react()],
   server: { proxy: adsbProxy },
   preview: { proxy: adsbProxy },

@@ -17,13 +17,15 @@ npm install
 npm run dev
 ```
 
-Open the URL Vite prints (`/pixijs-react/` base path).
+Open the URL Vite prints .
 
 ### Why a proxy?
 
 adsb.fi (like adsb.lol, OpenSky and airplanes.live) sends no CORS headers, so browsers can't call it directly. In dev and `npm run preview`, Vite proxies `/api/adsb/*` to `https://opendata.adsb.fi/api/*` (see `vite.config.js`).
 
-**For a production build** (static hosting), deploy the caching proxy in `worker/` (a Cloudflare Worker) and set `VITE_ADSB_API` at build time:
+**Production on shared PHP hosting (cPanel)**: the build ships `public/api/adsb.php` + `.htaccess`, a PHP port of the proxy with a 5 s / 2 min file cache. Nothing else to deploy: build and upload `dist/` to the subdomain's document root (the `Build and Deploy to FTP` workflow does it; point its `FTP_*` secrets at an FTP account whose home is the subdomain's folder).
+
+**Alternative** (static hosting without PHP), deploy the caching proxy in `worker/` (a Cloudflare Worker) and set `VITE_ADSB_API` at build time:
 
 ```sh
 cd worker && npx wrangler deploy        # prints https://skymap-proxy.<you>.workers.dev
